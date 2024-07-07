@@ -234,6 +234,213 @@ int main() {
 
 Using Interface, we can achieve multiple inheritance in C++.
 
-## Friend Function
+## [Abstract Class](/Abstraction.cpp)
 
-Friend function is a function that is not a member of the class but can access the private and protected members of the class.
+Abstract class is a class that has at least one pure virtual function. It is used to achieve abstraction in C++.
+
+Example of Abstract Class:
+
+```cpp
+class Abstract {
+public:
+    virtual void fun() = 0;
+};
+
+class A : public Abstract {
+public:
+    void fun() {
+        cout << "Function of Abstract Class" << endl;
+    }
+};
+
+int main() {
+    Abstract *a = new A();
+    a->fun();
+}
+
+// Here, Abstract is a class that has at least one pure virtual function and A is a class that implements the Abstract class.
+```
+
+Properties of Abstract Class:
+
+1. Abstract class can have constructors.
+2. Abstract class can have data members.
+3. `Object of Abstract class can't be created. But pointer of Abstract class can be created. To create the object of Abstract class, we have to create the object of the derived class. And in the derived class, we have to implement the pure virtual function of the Abstract class.`
+
+## [Virtual Function](/VirtualFunction.cpp)
+
+Virtual function is a function that is declared in the base class and redefined in the derived class. It is used to achieve run-time polymorphism in C++.
+
+Example of Virtual Function:
+
+```cpp
+class Base {
+public:
+    virtual void fun() {
+        cout << "Function of Base Class" << endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void fun() {
+        cout << "Function of Derived Class" << endl;
+    }
+};
+
+int main() {
+    Base *b = new Derived();
+    b->fun();
+}
+
+// Here, fun() is a virtual function that is declared in the base class and redefined in the derived class. And we have created the object of the derived class and assigned it to the pointer of the base class. So, the function of the derived class is called.
+```
+
+Properties of Virtual Function:
+
+1. Virtual function is a member function that is declared in the base class using the keyword virtual and redefined in the derived class.
+2. Virtual function is used to achieve run-time polymorphism in C++.
+3. Virtual function is used to achieve the function overriding in C++.
+4. Virtual function is used to achieve the late binding or dynamic binding in C++.
+5. Virtual function is used to achieve the function call on the bases of the object it pointed to, not on the bases of the pointer type.
+
+## [Pure Virtual Function](/PureVirtualFunction.cpp)
+
+**Pure virtual function is a virtual function that is declared in the base class using the keyword virtual and assigned to 0. It is used to achieve abstraction in C++.**
+
+Difference between Virtual Function and Pure Virtual Function:
+
+1. Virtual function is a member function that is declared in the base class using the keyword virtual and redefined in the derived class. But Pure virtual function is a virtual function that is declared in the base class using the keyword virtual and assigned to 0.
+
+2. Virtual function is used to achieve run-time polymorphism in C++. But Pure virtual function is used to achieve abstraction in C++.
+
+3. Object of the class that has a pure virtual function can't be created. But the pointer of the class that has a pure virtual function can be created. To create the object of the class that has a pure virtual function, we have to create the object of the derived class. And in the derived class, we have to implement the pure virtual function of the base class.
+
+### `Important Point:`
+
+### **If a Class contains pure virtual or virutal funtions and if you inheret this class then you must have to implement the pure virtual funtion in the derived class to create the object of the derived class.**
+
+## [Exception Handling](/ExceptionHandling.cpp)
+
+Exception handling is a mechanism to handle the runtime errors. It is used to handle the exceptions that can occur during the execution of the program.
+
+Example of Exception Handling:
+
+```cpp
+try {
+    int a = 10, b = 0;
+    if (b == 0) {
+        throw "Division by zero";
+    }
+    int c = a / b;
+    cout << c << endl;
+} catch (const char *e) {
+    cout << e << endl;
+}
+
+// Here, we have used the try and catch block to handle the exception that can occur during the execution of the program.
+```
+
+## Friend Class and Friend Function
+
+### 1. Friend Class: A friend class can access private and protected members of other classes in which it is declared as a friend. It is sometimes useful to allow a particular class to access private and protected members of other classes. For example, a LinkedList class may be allowed to access private members of Node.
+
+Example of Friend Class:
+
+```cpp
+class A {
+private:
+    int x;
+public:
+
+    A() {
+        x = 10;
+    }
+
+    friend class B;
+};
+
+class B {
+public:
+    void fun(A a) {
+        cout << "Value of x is: " << a.x << endl;
+    }
+};
+
+int main() {
+    A a;
+    B b;
+    b.fun(a);
+}
+
+// Here, B is a friend class of A. So, B can access the private members of A.
+```
+
+### 2. Friend Function: A friend function can access private and protected members of a class in which it is declared as a friend. It is sometimes useful to allow a particular function to access private and protected members of a class.
+
+Example of Friend Function:
+
+```cpp
+class A {
+private:
+    int x;
+public:
+
+        A() {
+            x = 10;
+        }
+
+        friend void fun(A a);
+    };
+
+void fun(A a) {
+    cout << "Value of x is: " << a.x << endl;
+}
+
+int main() {
+    A a;
+    fun(a);
+}
+
+// Here, fun() is a friend function of A. So, fun() can access the private members of A.
+```
+
+## Member Function Can be Declared outside the class
+
+Member functions can be declared outside the class using the scope resolution operator ::. It is useful when the function is too large and we want to separate the function definition from the class definition.
+
+Example of Member Function Can be Declared outside the class:
+
+```cpp
+class A {
+public:
+    void fun();
+};
+
+void A::fun() {
+    cout << "Function of A" << endl;
+}
+
+int main() {
+    A a;
+    a.fun();
+}
+
+// Here, fun() is a member function of A that is declared outside the class using the scope resolution operator ::.
+```
+
+## Access Specifiers:
+
+Access specifiers are used to define the access control of the members of the class. There are three types of access specifiers in C++:
+
+### 1. Public: Public members are accessible from outside the class. By default, all the members of the class are public.
+
+### 2. Private: Private members are not accessible from outside the class. They can only be accessed from within the class.
+
+### 3. Protected: Protected members are accessible from outside the class but only in a derived class.
+
+- Access specifiers in derived class:
+
+1. Public: Public members of the base class become public members of the derived class.
+2. Private: Private members of the base class are not accessible in the derived class.
+3. Protected: Protected members of the base class become protected members of the derived class.
